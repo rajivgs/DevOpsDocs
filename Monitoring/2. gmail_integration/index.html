@@ -1,0 +1,851 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Rajiv Gopal Singh">
+      
+      
+        <link rel="canonical" href="https://blog.rajivgopalsingh.com.np/Monitoring/2.%20gmail_integration/">
+      
+      
+        <link rel="prev" href="../1.%20setup_prometheus-grafana/">
+      
+      
+        <link rel="next" href="../3.%20slack_integration/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.1">
+    
+    
+      
+        <title>Gmail Integration - DevOpsDoc</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0e669242.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arial:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Arial";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gmail-integration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="DevOpsDoc" class="md-header__button md-logo" aria-label="DevOpsDoc" data-md-component="logo">
+      
+  <img src="../../assets/logo.jpg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DevOpsDoc
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Gmail Integration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+    
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../1.%20setup_prometheus-grafana/" class="md-tabs__link">
+          
+  
+    
+  
+  Monitoring
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../Logging/kafka/" class="md-tabs__link">
+        
+  
+    
+  
+  Logging
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="DevOpsDoc" class="md-nav__button md-logo" aria-label="DevOpsDoc" data-md-component="logo">
+      
+  <img src="../../assets/logo.jpg" alt="logo">
+
+    </a>
+    DevOpsDoc
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../.." class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+            </a>
+            
+              <label class="md-nav__link " for="__nav_1">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Home
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.%20setup_prometheus-grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Monitoring
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Logging/kafka/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Monitoring
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Monitoring
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.%20setup_prometheus-grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup the Prometheus and Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Gmail Integration
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3.%20slack_integration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Slack Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Logging/kafka/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="gmail-integration">Gmail Integration</h1>
+<p><strong><em>Description</em></strong></p>
+<p>The application provides a Webhook integration for Prometheus AlertManager to push alerts to Google Chat rooms.</p>
+<blockquote>
+<ul>
+<li><strong><em>Prometheus Installation</em></strong></li>
+</ul>
+</blockquote>
+<pre><code> helm repo add prometheus-community https://prometheus-community.github.io/helm-charts            
+ helm repo update                                                                                 
+ helm install name prometheus-community/prometheus --namespace namepsace-name    
+</code></pre>
+<ul>
+<li>
+<p><strong><em>Alertmanager-gchat-integration</em></strong></p>
+<p>A web application which listens for Prometheus AlertManager alerts' and forward them to Google 
+Chat rooms.</p>
+</li>
+</ul>
+<pre><code> Install gchat manager using helm chart     
+ helm repo add julb https://charts.julb.me 
+ helm install name julb/alertmanager-gchat-integration  --namespace namespace-name
+</code></pre>
+<blockquote>
+<ul>
+<li>Add the Gmail Webook in the prometheus-community-alertmanager</li>
+</ul>
+</blockquote>
+<pre><code>url : ‘http://service.name(gchat-integration).namespace/alerts?room=lotus(roomname)’
+apiVersion: v1
+data:
+  alertmanager.yml: |
+    global:
+      resolve_timeout: 1m
+    route:
+      group_by: ['alertname']
+      group_wait: 10s
+      group_interval: 10s
+      repeat_interval: 1h
+      receiver: 'gmail'
+    receivers:
+    - name: 'gmail'
+      webhook_configs:
+      - url: 'http://alert-manager-alertmanager-gchat-integration.zerone-monitoring/alerts?room=lotus'
+    templates:
+    - /etc/alertmanager/*.tmpl
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {&quot;apiVersion&quot;:&quot;v1&quot;,&quot;data&quot;:{&quot;alertmanager.yml&quot;:&quot;global:\n  resolve_timeout: 1m\nroute:\n  group_by: ['alertname']\n  group_wait: 10s\n  group_interval: 10s\n  repeat_interval: 1h\n  receiver: 'asd'\nreceivers:\n- name: 'asd'\n  webhook_configs:\n  - url: 'http://alert-manager-alertmanager-gchat-integration.zerone-monitoring.svc/alerts?room=lotus'\ntemplates:\n- /etc/alertmanager/*.tmpl\n&quot;},&quot;kind&quot;:&quot;ConfigMap&quot;,&quot;metadata&quot;:{&quot;annotations&quot;:{&quot;meta.helm.sh/release-name&quot;:&quot;prometheus-community&quot;,&quot;meta.helm.sh/release-namespace&quot;:&quot;zerone-monitoring&quot;},&quot;creationTimestamp&quot;:&quot;2023-09-19T16:33:26Z&quot;,&quot;labels&quot;:{&quot;app.kubernetes.io/instance&quot;:&quot;prometheus-community&quot;,&quot;app.kubernetes.io/managed-by&quot;:&quot;Helm&quot;,&quot;app.kubernetes.io/name&quot;:&quot;alertmanager&quot;,&quot;app.kubernetes.io/version&quot;:&quot;v0.26.0&quot;,&quot;helm.sh/chart&quot;:&quot;alertmanager-1.6.0&quot;},&quot;name&quot;:&quot;prometheus-community-alertmanager&quot;,&quot;namespace&quot;:&quot;zerone-monitoring&quot;,&quot;resourceVersion&quot;:&quot;80702&quot;,&quot;uid&quot;:&quot;c171403d-1beb-44a0-a39b-b62a7472695f&quot;}}
+    meta.helm.sh/release-name: prometheus-community
+    meta.helm.sh/release-namespace: zerone-monitoring
+  creationTimestamp: &quot;2023-09-20T11:06:03Z&quot;
+  labels:
+    app.kubernetes.io/instance: prometheus-community
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: alertmanager
+    app.kubernetes.io/version: v0.26.0
+    helm.sh/chart: alertmanager-1.6.0
+  name: prometheus-community-alertmanager
+  namespace: zerone-monitoring
+  resourceVersion: &quot;95493&quot;
+  uid: c38ca1c3-0c69-48ea-8b3b-be724ab13c90
+</code></pre>
+<blockquote>
+<ul>
+<li><strong><em>kubectl get cm prometheus–community-server -o yaml</em></strong></li>
+</ul>
+</blockquote>
+<pre><code>  alerting_rules.yml: |
+    groups:
+    - name: alertname
+      rules:
+      - alert: KubernetesNodeNotReady
+        expr: kube_node_status_condition{condition=&quot;Ready&quot;,status=&quot;true&quot;} == 0
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: Kubernetes node not ready (instance {{ $labels.instance }})
+          description: &quot;Node {{ $labels.node }} has been unready for a long time\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}&quot;
+      - alert: KubernetesMemoryPressure
+        expr: kube_node_status_condition{condition=&quot;MemoryPressure&quot;,status=&quot;true&quot;} == 1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: Kubernetes memory pressure (instance {{ $labels.instance }})
+          description: &quot;{{ $labels.node }} has MemoryPressure condition\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}&quot;
+      - alert: KubernetesDiskPressure
+        expr: kube_node_status_condition{condition=&quot;DiskPressure&quot;,status=&quot;true&quot;} == 1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: Kubernetes disk pressure (instance {{ $labels.instance }})
+          description: &quot;{{ $labels.node }} has DiskPressure condition\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}&quot;
+      - alert: KubernetesNetworkUnavailable
+        expr: kube_node_status_condition{condition=&quot;NetworkUnavailable&quot;,status=&quot;true&quot;} == 1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: Kubernetes network unavailable (instance {{ $labels.instance }})
+          description: &quot;{{ $labels.node }} has NetworkUnavailable condition\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}&quot;
+      - alert: KubernetesOutOfCapacity
+        expr: sum by (node) ((kube_pod_status_phase{phase=&quot;Running&quot;} == 1) + on(uid) group_left(node) (0 * kube_pod_info{pod_template_hash=&quot;&quot;})) / sum by (node) (kube_node_status_allocatable{resource=&quot;pods&quot;}) * 100 &gt; 90
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: Kubernetes out of capacity (instance {{ $labels.instance }})
+          description: &quot;{{ $labels.node }} is out of capacity\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}&quot;
+      - alert: KubernetesContainerOomKiller
+        expr: (kube_pod_container_status_restarts_total - kube_pod_container_status_restarts_total offset 10m &gt;= 1) and ignoring (reason) min_over_time(kube_pod_container_status_last_terminated_reason{reason=&quot;OOMKilled&quot;}[10m]) == 1
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: Kubernetes container oom killer (instance {{ $labels.instance }})
+          description: &quot;Container {{ $labels.container }} in pod {{ $labels.namespace }}/{{ $labels.pod }} has been OOMKilled {{ $value }} times in the last 10 minutes.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}&quot;
+      - alert: KubernetesPersistentvolumeclaimPending
+        expr: kube_persistentvolumeclaim_status_phase{phase=&quot;Pending&quot;} == 1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: Kubernetes PersistentVolumeClaim pending (instance {{ $labels.instance }})
+          description: &quot;PersistentVolumeClaim {{ $labels.namespace }}/{{ $labels.persistentvolumeclaim }} is pending\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}&quot;
+      - alert: KubernetesPodCrashLooping
+        expr: increase(kube_pod_container_status_restarts_total[1m]) &gt; 3
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: Kubernetes pod crash looping (instance {{ $labels.instance }})
+          description: &quot;Pod {{ $labels.pod }} is crash looping\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}&quot;
+      - alert: ImagePullBackoffAlert
+        expr: kube_pod_container_status_waiting_reason{reason=&quot;ImagePullBackOff&quot;} == 1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: &quot;Pod {{ $labels.namespace }}/{{ $labels.pod }} is in ImagePullBackOff state&quot;
+          description: &quot;Pod {{ $labels.namespace }}/{{ $labels.pod }} is failing to pull its container image.&quot;
+</code></pre>
+<blockquote>
+<ul>
+<li><strong><em>Get the google chat space url</em></strong>      </li>
+</ul>
+</blockquote>
+<p><img alt="gmailoutput" src="../../assets/images/monitoring/gmail/gmail-integration.png" /></p>
+<p><br /></p>
+<blockquote>
+<ul>
+<li>Encode  the following to base64.</li>
+</ul>
+</blockquote>
+<pre><code>[app.notification]
+# Jinja2 custom template to print message to GChat.
+custom_template_path = &quot;/opt/alertmanager-gchat-integration/cm/notification-template-json.j2&quot;
+[app.room.lotus(google_space_name)]
+notification_url = ‘&lt;google_chat_space_url&gt;’
+</code></pre>
+<blockquote>
+<ul>
+<li>Use the convert base64 code in the Secret (gchat-integration) &amp;&amp; paste  in config.toml section</li>
+</ul>
+</blockquote>
+<pre><code>apiVersion: v1
+data:
+  config.toml: &lt;Encoded base64 value&gt;&gt;
+kind: Secret
+
+</code></pre>
+<blockquote>
+<ul>
+<li>After updating the Secret and ConfigMap we need to restart some Pod: </li>
+</ul>
+</blockquote>
+<pre><code>    - alert-manager-alertmanager-gchat-integration
+    - prometheus-community-alertmanager
+    - prometheus-community-server
+</code></pre>
+<p><strong><em>Output</em></strong></p>
+<p><img alt="gmailoutput" src="../../assets/images/monitoring/gmail/gmail-output.png" /></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../1.%20setup_prometheus-grafana/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Setup the Prometheus and Grafana" rel="prev">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Setup the Prometheus and Grafana
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../3.%20slack_integration/" class="md-footer__link md-footer__link--next" aria-label="Next: Slack Integration" rel="next">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Slack Integration
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.78eede0e.min.js"></script>
+      
+    
+  </body>
+</html>
