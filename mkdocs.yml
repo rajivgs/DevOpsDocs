@@ -1,0 +1,68 @@
+site_name: DevOpsDoc
+site_author: Rajiv Gopal Singh
+site_url: https://blog.rajivgopalsingh.com.np
+ 
+nav:
+  - Home: 
+    - index.md
+    - Monitoring: Monitoring/1. setup_prometheus-grafana.md 
+    - Logging: Logging/kafka.md
+      
+  - Monitoring: 
+    - Monitoring/1. setup_prometheus-grafana.md
+    - Monitoring/2. gmail_integration.md
+    - Monitoring/3. slack_integration.md
+  - Logging: Logging/kafka.md
+
+# Configuration
+theme:
+  name: material
+  features:
+    - search.suggest
+    - announce.dismiss
+    - content.action.edit
+    - content.action.view
+    - content.code.annotate
+    - content.code.copy
+    # - content.code.select
+    # - content.tabs.link
+    - content.tooltips
+    # - header.autohide
+    # - navigation.expand
+    - navigation.footer
+    - navigation.indexes
+    # - navigation.instant
+    # - navigation.prune
+    - navigation.sections
+    - navigation.tabs
+    # - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+    # - toc.integrate
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Arial
+    code: Roboto Mono
+  icon:
+    logo: logo
+  logo: assets/logo.jpg
+  alternate:
+    - name: English
+      link: /en/ 
+
