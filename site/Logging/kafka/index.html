@@ -1,0 +1,973 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Rajiv Gopal Singh">
+      
+      
+        <link rel="canonical" href="https://blog.rajivgopalsingh.com.np/Logging/kafka/">
+      
+      
+        <link rel="prev" href="../../Monitoring/3.%20slack_integration/">
+      
+      
+        <link rel="next" href="../../Security/KubeScape/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.1">
+    
+    
+      
+        <title>Logging - DevOpsDoc</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0e669242.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arial:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Arial";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#kafka" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="DevOpsDoc" class="md-header__button md-logo" aria-label="DevOpsDoc" data-md-component="logo">
+      
+  <img src="../../assets/logo.jpg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DevOpsDoc
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Logging
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+    
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Monitoring/1.%20setup_prometheus-grafana/" class="md-tabs__link">
+          
+  
+    
+  
+  Monitoring
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+    
+  
+  Logging
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Security/KubeScape/" class="md-tabs__link">
+          
+  
+    
+  
+  Security
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="DevOpsDoc" class="md-nav__button md-logo" aria-label="DevOpsDoc" data-md-component="logo">
+      
+  <img src="../../assets/logo.jpg" alt="logo">
+
+    </a>
+    DevOpsDoc
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../.." class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+            </a>
+            
+              <label class="md-nav__link " for="__nav_1">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Home
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Monitoring/1.%20setup_prometheus-grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Monitoring
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Security/KubeScape/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Monitoring
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Monitoring
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Monitoring/1.%20setup_prometheus-grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup the Prometheus and Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Monitoring/2.%20gmail_integration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gmail Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Monitoring/3.%20slack_integration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Slack Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Security
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Security
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Security/KubeScape/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    KubeScape
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Security/M9Sweeper/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    M9Sweeper
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="kafka">KAFKA</h1>
+<p><img alt="Kafka" src="https://www.openlogic.com/sites/default/files/image/2020-05/image-blog-apacha-kafka.jpg" /></p>
+<p><strong><em>Introduction</em></strong></p>
+<p>Apache Kafka is an open-source distributed event streaming platform used by thousands of companies for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.</p>
+<p><strong><em>Why Kafka? Benefits and Use Cases</em></strong></p>
+<ul>
+<li>Data Integration</li>
+<li>Metrics and Monitoring</li>
+<li>Log Aggregation</li>
+<li>Stream Processing</li>
+<li>Publish-Subscribe Messaging</li>
+<li>Kafka Architecture – Fundamental Concepts</li>
+<li>Kafka Topics</li>
+<li>Kafka Partitioning</li>
+</ul>
+<p><strong><em>How Kafka Partitioning Works</em></strong></p>
+<p><img alt="" src="https://www.cloudkarafka.com/img/blog/apache-kafka-partition.png" /></p>
+<ul>
+<li>Kafka Brokers 
+    Kafka brokers are like computer workers in the Kafka system. They store and handle events, manage data partitions, and work together for reliability. Think of them as the backbone of Kafka.
+    So, brokers are the worker bees of the Kafka system, managing events and making sure everything runs smoothly.</li>
+</ul>
+<p><strong><em>Replications</em></strong></p>
+<pre><code>- To ensure data safety, Kafka creates copies of data partitions called leader and follower replicas. When you write data, it goes to the leader, and then both leader and followers automatically replicate the data. If a node fails, another takes over. As a developer, you don't need to worry much about this process. Just know your data is secure and resilient.
+Client Applications 
+- In Kafka, there are two main types of client applications: producers and consumers. Producers put messages into topics, while consumers read messages from topics. These are the building blocks for working with Kafka. Everything that's not a Kafka broker is essentially a producer or consumer, or both. They're how you connect and work with a Kafka cluster       
+Kafka Producers
+- The API surface of the producer library is fairly lightweight: In Java, there is a class called KafkaProducer that you use to connect to the cluster. 
+Kafka Consumers
+- Using the consumer API is similar in principle to the producer. You use a class called KafkaConsumer to connect to the cluster (passing a configuration map to specify the address of the cluster, security, and other parameters).
+</code></pre>
+<p><strong><em>Kafka Installation</em></strong></p>
+<pre><code>Prerequisite: Java 11 or 17 should be installed on the system
+https://kafka.apache.org/documentation.html#java
+</code></pre>
+<p><img alt="java_version" src="../../assets/images/logging/1.java-version.png" /></p>
+<p><strong><em>Download Apache Kafka</em></strong></p>
+<pre><code>https://kafka.apache.org/downloads
+</code></pre>
+<blockquote>
+<ul>
+<li>Extract or untar the downloaded kafka file</li>
+</ul>
+</blockquote>
+<pre><code>tar xzvf kafka_2.12-3.5.1.tgz
+</code></pre>
+<p><img alt="" src="../../assets/images/logging/2.unpack_kafka.png" /></p>
+<blockquote>
+<ul>
+<li>Now test Kafka and move the the kafka directory and use the below command    </li>
+</ul>
+</blockquote>
+<pre><code>bin/kafka-topic.sh
+</code></pre>
+<p><img alt="" src="../../assets/images/logging/5.kafka-path.png" /></p>
+<blockquote>
+<ul>
+<li>Setting the Path </li>
+</ul>
+</blockquote>
+<pre><code>Open '.bashrc' file using the command: 
+vi .bashrc
+</code></pre>
+<p><img alt="" src="../../assets/images/logging/3.bashrc-2.png" /></p>
+<blockquote>
+<ul>
+<li>Move to the end and set the path using the command</li>
+</ul>
+</blockquote>
+<pre><code>export PATH=/home/rajivgs/Downloads/webi/kafka_2.12-3.5.1/bin:$PATH
+</code></pre>
+<p><img alt="" src="../../assets/images/logging/4.kakfa-path_1.png" /></p>
+<blockquote>
+<ul>
+<li>To test, run the command from and directory.</li>
+</ul>
+</blockquote>
+<pre><code>kafka-topic.sh
+</code></pre>
+<p><img alt="" src="../../assets/images/logging/10.after_path_kafka_check.png" /></p>
+<p>If the below output is shown, it means the path is successfully set. If not, something is wrong.</p>
+<blockquote>
+<ul>
+<li>Starting Zookeeper Server on Linux</li>
+</ul>
+</blockquote>
+<pre><code>To start zookeeper, there are following below steps used
+
+Step 1: Move to the and create a new directory 'data'
+
+Step 2: Again, move to the data directory, and make two new directories as 'zookeeper' and 'kafka'.
+</code></pre>
+<p><img alt="" src="../../assets/images/logging/6.directories.png" /></p>
+<p>To run the zookeeper server. Open the zookeeper.properties file, which is located under the config folder. </p>
+<pre><code> vi config/zookeeper.properties
+</code></pre>
+<p>Edit the value of dataDIr by placing the path of the newly created zookeeper folder.</p>
+<pre><code> dataDir=/home/rajivgs/Downloads/webi/kafka_2.12-3.5.1/data/zookeeper
+
+ zookeeper-server-start.sh config/zookeeper.properties 
+</code></pre>
+<p><img alt="" src="../../assets/images/logging/7.zookeeper.png" /></p>
+<pre><code>zookeeper-server-start.sh config/zookeeper.properties
+</code></pre>
+<p><img alt="" src="../../assets/images/logging/8.zookeeper_running.png" /></p>
+<p>Move to the 'config' folder, and open server.properties file.</p>
+<pre><code>vi config/server.properties
+</code></pre>
+<pre><code>Edit the value of logs.dir=/path/data/kafka as shown below
+</code></pre>
+<p><img alt="" src="../../assets/images/logging/9.server.png" /></p>
+<p>Now, run the Kafka server by using the following command:</p>
+<pre><code>  kafka-server-start.sh config/server.properties
+</code></pre>
+<p><img alt="" src="./../assets/images/logging" /></p>
+<p>Creating Kafka Topics
+Initially, make sure that both zookeeper, as well as the Kafka server, should be started.</p>
+<pre><code>kafka-topics.sh --bootstrap-server localhost:9092 --create --topic topic-name  ||
+kafka-topics.sh --bootstrap-server localhost:9092 --create --topic logger --partitions 1 --replication-factor 1
+</code></pre>
+<p><img alt="" src="./../assets/images/logging" /></p>
+<p>Here's a breakdown of the command in short points:</p>
+<blockquote>
+<ul>
+<li>
+<p><code>kafka-topics.sh</code>: This is the Kafka command-line tool used to manage Kafka topics.</p>
+</li>
+<li>
+<p><code>--bootstrap-server localhost:9092</code>: Specifies the Kafka broker(s) to connect to. In this case, it's connecting to a Kafka broker running locally on port 9092.</p>
+</li>
+<li>
+<p><code>--create</code>: Indicates that you want to create a new Kafka topic.</p>
+</li>
+<li>
+<p><code>--topic logger</code>: Specifies the name of the topic to be created, in this case, the topic name is "logger".</p>
+</li>
+<li>
+<p><code>--partitions 1</code>: Specifies the number of partitions for the topic. Partitions are the units of parallelism in Kafka. Here, you're creating the topic with 1 partition.</p>
+</li>
+<li>
+<p><code>--replication-factor 1</code>: Sets the replication factor for the topic. Replication ensures data durability and availability. Here, you're using a replication factor of 1, meaning there's only one copy of each partition's data.</p>
+</li>
+</ul>
+</blockquote>
+<p>So, the command is creating a Kafka topic named "logger" with a single partition and a replication factor of 1, connecting to a Kafka broker running on localhost at port 9092.</p>
+<p>Listing the number of Topics</p>
+<pre><code>kafka-topics.sh --bootstrap-server localhost:9092 --list
+</code></pre>
+<ul>
+<li><strong><em>Describing the topic</em></strong></li>
+</ul>
+<pre><code>kafka-topics.sh --bootstrap-server localhost:9092 -describe --topic topic-name 
+kafka-topics.sh --bootstrap-server kafka2.rajivgopalsingh.com.np:9092 -describe --topic logger-01 
+</code></pre>
+<ul>
+<li><strong><em>Deleting the topic</em></strong></li>
+</ul>
+<pre><code>kafka-topics.sh --bootstrap-server localhost:9092  --topic topic-name  -delete 
+kafka-topics.sh --bootstrap-server kafka2.rajivgopalsingh.com.np:9092  --topic logger-01  -delete 
+</code></pre>
+<ul>
+<li><strong><em>Kafka Console Producer</em></strong></li>
+</ul>
+<pre><code>kafka-console-producer.sh --broker-list localhost:9092 --topic topic-name
+</code></pre>
+<ul>
+<li><strong><em>Kafka Console Consumer</em></strong></li>
+</ul>
+<pre><code>kafka-console-consumerr.sh --broker-list localhost:9092 --topic topic-name  ||
+kafka-console-producer.sh --broker-list localhost:9092 --topic topic-name --from-beginning 
+</code></pre>
+<p><strong><em>Practice:</em></strong></p>
+<pre><code>1. https://kube-logging.dev/docs/examples/kafka-nginx/
+</code></pre>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../Monitoring/3.%20slack_integration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Slack Integration" rel="prev">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Slack Integration
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../Security/KubeScape/" class="md-footer__link md-footer__link--next" aria-label="Next: KubeScape" rel="next">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                KubeScape
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.78eede0e.min.js"></script>
+      
+    
+  </body>
+</html>
