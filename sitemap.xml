@@ -2,27 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://blog.rajivgopalsingh.com.np/</loc>
-         <lastmod>2023-09-30</lastmod>
+         <lastmod>2023-11-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://blog.rajivgopalsingh.com.np/Bash/bash/</loc>
+         <lastmod>2023-11-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.rajivgopalsingh.com.np/Logging/kafka/</loc>
-         <lastmod>2023-09-30</lastmod>
+         <lastmod>2023-11-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.rajivgopalsingh.com.np/Monitoring/1.%20setup_prometheus-grafana/</loc>
-         <lastmod>2023-09-30</lastmod>
+         <lastmod>2023-11-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.rajivgopalsingh.com.np/Monitoring/2.%20gmail_integration/</loc>
-         <lastmod>2023-09-30</lastmod>
+         <lastmod>2023-11-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.rajivgopalsingh.com.np/Monitoring/3.%20slack_integration/</loc>
-         <lastmod>2023-09-30</lastmod>
+         <lastmod>2023-11-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://blog.rajivgopalsingh.com.np/Security/KubeScape/</loc>
+         <lastmod>2023-11-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://blog.rajivgopalsingh.com.np/Security/M9Sweeper/</loc>
+         <lastmod>2023-11-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
