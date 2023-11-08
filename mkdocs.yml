@@ -5,14 +5,20 @@ site_url: https://blog.rajivgopalsingh.com.np
 nav:
   - Home: 
     - index.md
+    - Bash: Bash/bash.md
     - Monitoring: Monitoring/1. setup_prometheus-grafana.md 
     - Logging: Logging/kafka.md
-      
+    - Security:  Security/KubeScape.md
+  - Bash:
+    - Bash/bash.md  
   - Monitoring: 
     - Monitoring/1. setup_prometheus-grafana.md
     - Monitoring/2. gmail_integration.md
     - Monitoring/3. slack_integration.md
   - Logging: Logging/kafka.md
+  - Security:  
+    - Security/KubeScape.md
+    - Security/M9Sweeper.md  
 
 # Configuration
 theme:
