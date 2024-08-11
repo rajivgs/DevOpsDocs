@@ -1,16 +1,15 @@
-site_name: DevOpsDoc
+site_name: DevOps-Documentation
 site_author: Rajiv Gopal Singh
 site_url: https://blog.rajivgopalsingh.com.np
  
 nav:
   - Home: 
     - index.md
-    - Bash: Bash/bash.md
+    - Scripting: Scripting/bash.md
     - Monitoring: Monitoring/1. setup_prometheus-grafana.md 
     - Logging: Logging/kafka.md
     - Security:  Security/KubeScape.md
-  - Bash:
-    - Bash/bash.md  
+    - Kubernetes: Kubernetes/Introduction/intro.md
   - Monitoring: 
     - Monitoring/1. setup_prometheus-grafana.md
     - Monitoring/2. gmail_integration.md
@@ -19,56 +18,85 @@ nav:
   - Security:  
     - Security/KubeScape.md
     - Security/M9Sweeper.md  
+  - Troubleshoots:
+    - Troubleshoots/How to rotate and renew expired Contou.md
+  - Traefik:
+    - Traefik/Traefik.md
 
 # Configuration
 theme:
   name: material
   features:
-    - search.suggest
-    - announce.dismiss
-    - content.action.edit
-    - content.action.view
-    - content.code.annotate
-    - content.code.copy
-    # - content.code.select
-    # - content.tabs.link
-    - content.tooltips
-    # - header.autohide
-    # - navigation.expand
-    - navigation.footer
-    - navigation.indexes
-    # - navigation.instant
-    # - navigation.prune
-    - navigation.sections
     - navigation.tabs
-    # - navigation.tabs.sticky
+    - navigation.sections
     - navigation.top
     - navigation.tracking
-    - search.highlight
-    - search.share
+    - navigation.expand
     - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - content.tooltips
     - toc.follow
-    # - toc.integrate
   palette:
-    - scheme: default
-      primary: indigo
-      accent: indigo
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: lime
       toggle:
-        icon: material/brightness-7
+        icon: material/weather-sunny
         name: Switch to dark mode
-    - scheme: slate
-      primary: indigo
-      accent: indigo
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: purple
       toggle:
-        icon: material/brightness-4
+        icon: material/weather-night
         name: Switch to light mode
   font:
-    text: Arial
+    text: Roboto
     code: Roboto Mono
   icon:
-    logo: logo
-  logo: assets/logo.jpg
-  alternate:
-    - name: English
-      link: /en/ 
+    logo: material/book-open-page-variant
+  favicon: assets/favicon.png
+  language: en
 
+# Customization
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/RajivGS
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/rajivgs/
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/@whitelotus8063
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tabbed
+  - pymdownx.tilde
+
+# Plugins
+plugins:
+  - search
+  - minify:
+      minify_html: true
