@@ -5,11 +5,9 @@ site_url: https://blog.rajivgopalsingh.com.np
 nav:
   - Home: 
     - index.md
-    - Scripting: Scripting/bash.md
     - Monitoring: Monitoring/1. setup_prometheus-grafana.md 
     - Logging: Logging/kafka.md
     - Security:  Security/KubeScape.md
-    - Kubernetes: Kubernetes/Introduction/intro.md
   - Monitoring: 
     - Monitoring/1. setup_prometheus-grafana.md
     - Monitoring/2. gmail_integration.md
