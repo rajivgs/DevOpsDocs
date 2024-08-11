@@ -2,37 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://blog.rajivgopalsingh.com.np/</loc>
-         <lastmod>2023-11-08</lastmod>
+         <lastmod>2024-08-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.rajivgopalsingh.com.np/Logging/kafka/</loc>
-         <lastmod>2023-11-08</lastmod>
+         <lastmod>2024-08-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.rajivgopalsingh.com.np/Monitoring/1.%20setup_prometheus-grafana/</loc>
-         <lastmod>2023-11-08</lastmod>
+         <lastmod>2024-08-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.rajivgopalsingh.com.np/Monitoring/2.%20gmail_integration/</loc>
-         <lastmod>2023-11-08</lastmod>
+         <lastmod>2024-08-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.rajivgopalsingh.com.np/Monitoring/3.%20slack_integration/</loc>
-         <lastmod>2023-11-08</lastmod>
+         <lastmod>2024-08-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.rajivgopalsingh.com.np/Security/KubeScape/</loc>
-         <lastmod>2023-11-08</lastmod>
+         <lastmod>2024-08-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://blog.rajivgopalsingh.com.np/Security/M9Sweeper/</loc>
-         <lastmod>2023-11-08</lastmod>
+         <lastmod>2024-08-11</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://blog.rajivgopalsingh.com.np/Traefik/Traefik/</loc>
+         <lastmod>2024-08-11</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://blog.rajivgopalsingh.com.np/Troubleshoots/How%20to%20rotate%20and%20renew%20expired%20Contou/</loc>
+         <lastmod>2024-08-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
