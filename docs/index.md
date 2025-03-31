@@ -6,8 +6,13 @@ A one-stop hub for all your DevOps documentation needs, containing helpful guide
 
 - **Monitoring**
     
-Your go-to source for DevOps monitoring expertise, offering insights, tools, and techniques to keep a vigilant eye on your systems and applications.
+- **Logging** 
 
-- **Logging**
+- **Backup & Restore**
 
-Unlock the power of DevOps logging with our repository, packed with insights, tutorials, and solutions to help you capture, analyze, and make sense of your application logs    
+- **Security**
+    
+- **Multi-Cluster**
+
+- **Traefik**
+    

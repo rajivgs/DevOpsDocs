@@ -8,11 +8,17 @@ nav:
     - Monitoring: Monitoring/1. setup_prometheus-grafana.md 
     - Logging: Logging/kafka.md
     - Security:  Security/KubeScape.md
+    - Troubleshoots: Troubleshoots/How to rotate and renew expired Contou.md
+    - Traefik: Traefik/Traefik.md
+    - MultiCluster: MultiCluster/Karmada.md
+    - Backup&Restore: Backup&Restore/kasten.md
   - Monitoring: 
     - Monitoring/1. setup_prometheus-grafana.md
     - Monitoring/2. gmail_integration.md
     - Monitoring/3. slack_integration.md
-  - Logging: Logging/kafka.md
+  - Logging: 
+    - Logging/kafka.md
+    - Logging/loki.md
   - Security:  
     - Security/KubeScape.md
     - Security/M9Sweeper.md  
@@ -20,7 +26,10 @@ nav:
     - Troubleshoots/How to rotate and renew expired Contou.md
   - Traefik:
     - Traefik/Traefik.md
-
+  - MultiCluster:
+    - MultiCluster/Karmada.md
+  - Backup&Restore:
+    - Backup&Restore/kasten.md
 # Configuration
 theme:
   name: material
